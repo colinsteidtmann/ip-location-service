@@ -1,24 +1,14 @@
 // .devcontainer/devcontainer.json
 {
     "name": "C++ IP Location Service (Compose)",
-    "dockerComposeFile": "../docker-compose.yml", // Path to your docker-compose.yml from .devcontainer folder
-    "service": "api", // Name of the service in docker-compose.yml that is your dev container
-    "workspaceFolder": "/home/vscode/app", // The path inside the container where your project files are mounted
-
-    // Uncomment the next line if you want to run a command after the container is created and before VS Code attaches.
-    // "onCreateCommand": "cd /home/vscode/app && cmake -S . -B build", // Optional: run cmake after container creation
-
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // This is useful for installing dependencies, compiling, etc.
-    "postCreateCommand": "cd /home/vscode/app && cmake -S . -B build", // This is usually where you run cmake
-
-    // Forward ports from the container to the host machine
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "api",
+    "workspaceFolder": "/home/appuser/app",
+    "postCreateCommand": "cd /home/appuser/app && cmake -S api -B build && cd build && make",
     "forwardPorts": [8080, 5432],
 
-    // Set the default user for the container
-    "remoteUser": "vscode",
+    "remoteUser": "appuser",
 
-    // Add extensions for your development environment
     "customizations": {
         "vscode": {
             "extensions": [
@@ -29,7 +19,6 @@
             ]
         }
     },
-    // Keep the container running in the background when no VS Code window is connected.
-    // This is useful if you want to detach and re-attach later.
-    "shutdownAction": "none" // Prevents the container from stopping when VS Code disconnects
+
+    "shutdownAction": "none"
 }

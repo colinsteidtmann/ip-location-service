@@ -1,0 +1,67 @@
+# Build directories
+build/
+bin/
+lib/
+obj/
+build_tests/
+
+# C++ compiled files
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+install_manifest.txt
+compile_commands.json
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+.dockerignore
+
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Secrets and config
+.env.local
+.env.production
+secrets/
+config/local.conf
+
+# Test outputs
+test_results/
+coverage/
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# Package managers
+node_modules/
+vendor/
+
+# Redis dump files
+dump.rdb
+
+# PostgreSQL
+*.backup
+*.sql.gz
