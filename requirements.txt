@@ -1,0 +1,2 @@
+requests
+psycopg2-binary # Use binary for easier installation without system compilers

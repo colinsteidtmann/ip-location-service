@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/ip_location_service.dir/link.d CMakeFiles/ip_location_service.dir/main.cpp.o -o ip_location_service  /usr/lib/x86_64-linux-gnu/libpq.so /usr/lib/x86_64-linux-gnu/libjsoncpp.so /usr/lib/x86_64-linux-gnu/libpqxx.so

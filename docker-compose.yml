@@ -1,0 +1,56 @@
+services:
+  # PostgreSQL Database Service
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ip_locations_db
+      POSTGRES_USER: ip_user
+      POSTGRES_PASSWORD: ip_password
+    volumes:
+      - ip_location_data:/var/lib/postgresql/data
+      - ./db_init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck: # <-- ADD THIS BLOCK
+      test: ["CMD-SHELL", "pg_isready -U ip_user -d ip_locations_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Your C++ API Service (Dev Container)
+  api:
+    build:
+      context: ./.devcontainer/
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy # Use service_healthy condition
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: "postgresql://ip_user:ip_password@db:5432/ip_locations_db"
+    volumes:
+      - .:/home/vscode/app
+    entrypoint: /bin/sh -c "while true; do sleep 1000; done"
+
+  data-updater:
+    build:
+      context: .
+      dockerfile: Dockerfile.data-updater
+    depends_on:
+      db:
+        condition: service_healthy # Ensure DB is not just started, but healthy
+    volumes:
+      - ./scripts:/app/scripts
+    # Crucial: Add a small delay to ensure DB is fully ready for connection
+    command: sh -c "sleep 10 && python /app/scripts/update_data.py"
+    environment:
+      DB_HOST: db
+      DB_NAME: ip_locations_db
+      DB_USER: ip_user
+      DB_PASSWORD: ip_password
+      DB_PORT: 5432
+
+volumes:
+  ip_location_data:

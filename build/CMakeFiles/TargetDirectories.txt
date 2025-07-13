@@ -1,0 +1,3 @@
+/home/vscode/app/build/CMakeFiles/ip_location_service.dir
+/home/vscode/app/build/CMakeFiles/edit_cache.dir
+/home/vscode/app/build/CMakeFiles/rebuild_cache.dir
